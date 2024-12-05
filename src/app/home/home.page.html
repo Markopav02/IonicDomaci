@@ -1,20 +1,58 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      <h1>Copetova kuhinja</h1>
+      <p class="date">{{today | date:'fullDate'}}</p>
     </ion-title>
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <!-- Glavni sadržaj -->
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>Recepti</ion-title>
+      
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  <ion-content [fullscreen]="true">
+    <ion-list *ngFor="let recipe of recipes">
+      <ion-card>
+        <ion-card-header>
+          <!-- Naslov recepta -->
+          <ion-card-title>{{recipe.naziv}}</ion-card-title>
+          <ion-item lines="none">
+            <!-- Ikonica za težinu pripreme -->
+            <ion-icon *ngIf="recipe.tezina === 'Lako'" name="happy-outline" color="success"></ion-icon>
+            <ion-icon *ngIf="recipe.tezina === 'Srednje'" name="alert-circle-outline" color="warning"></ion-icon>
+            <ion-icon *ngIf="recipe.tezina === 'Teško'" name="skull-outline" color="danger"></ion-icon>
+            <ion-label>&nbsp;{{recipe.tezina}}</ion-label>
+          </ion-item>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <!-- Slika recepta -->
+          <ion-thumbnail slot="start">
+            <img [src]="recipe.img" alt="{{recipe.naziv}}">
+          </ion-thumbnail>
+          
+          <!-- Opis recepta -->
+          <p>{{recipe.opis}}</p>
+          
+          <!-- Akcije za ažuriranje i brisanje -->
+          <ion-row>
+            <ion-button (click)="goToUpdatePage(recipe)" color="primary">Izmeni</ion-button>
+            <!--<ion-button (click)="deleteRecipe(recipe)" color="danger">Delete</ion-button>-->
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </ion-content>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="goToAddPage()">
+    <ion-icon name="add">Dodaj</ion-icon>
+  </ion-fab-button>
+</ion-fab>
+

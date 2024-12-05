@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'dodaj-recept',
+    loadChildren: () => import('./dodaj-recept/dodaj-recept.module').then( m => m.DodajReceptPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'azuriraj-recept',
+    loadChildren: () => import('./azuriraj-recept/azuriraj-recept.module').then( m => m.AzurirajReceptPageModule)
+  },
 ];
 
 @NgModule({
