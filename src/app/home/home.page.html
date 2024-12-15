@@ -34,9 +34,7 @@
         
         <ion-card-content>
           <!-- Slika recepta -->
-          <ion-thumbnail slot="start">
-            <img [src]="recipe.img" alt="{{recipe.naziv}}">
-          </ion-thumbnail>
+          
           
           <!-- Opis recepta -->
           <p>{{recipe.opis}}</p>
@@ -44,7 +42,7 @@
           <!-- Akcije za ažuriranje i brisanje -->
           <ion-row>
             <ion-button (click)="goToUpdatePage(recipe)" color="primary">Izmeni</ion-button>
-            <!--<ion-button (click)="deleteRecipe(recipe)" color="danger">Delete</ion-button>-->
+            <ion-button (click)="deleteRecipe(recipe)" color="danger">Izbrisi</ion-button>
           </ion-row>
         </ion-card-content>
       </ion-card>

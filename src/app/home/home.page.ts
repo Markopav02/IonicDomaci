@@ -1,4 +1,4 @@
-import { Component,OnInit,OnDestroy } from '@angular/core';
+import { Component,OnInit,OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DodajReceptPage } from '../dodaj-recept/dodaj-recept.page';
 import { AzurirajReceptPage } from '../azuriraj-recept/azuriraj-recept.page';
@@ -19,40 +19,14 @@ type recipe={
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit,OnDestroy{
+export class HomePage implements OnInit,OnDestroy,OnChanges{
   today: number = Date.now();
   recipes: any;
   sub: Subscription = new Subscription;
   constructor(public modalCtrl: ModalController,private dataService: DataService) {}
+
   ngOnInit(): void {
     this.getData();
-    /*this.recipes=[
-      {
-        id:1,
-        naziv: 'Špageti bolonjeze',
-        opis: 'Ukusni špageti sa sočnim sosom od paradajza i mesa.',
-        img: 'assets/images/spageti.jpg',
-        tezina: 'Lako',
-        omiljen:false
-      },
-      {
-        id:2,
-        naziv: 'Čokoladna torta',
-        opis: 'Neodoljiva torta sa slojevima bogatog čokoladnog fila.',
-        img: 'assets/images/cokoladna_torta.jpg',
-        tezina: 'Teško',
-        omiljen:false,
-      },
-      {
-        id:3,
-        naziv: 'Salata Cezar',
-        opis: 'Osvježavajuća salata sa piletinom, krutonima i parmezanom.',
-        img: 'assets/images/salata_cezar.jpg',
-        tezina: 'Srednje',
-        omiljen:false,
-      }
-
-    ];*/
   }
   async goToAddPage() {
     const modal = await this.modalCtrl.create({
@@ -72,15 +46,30 @@ export class HomePage implements OnInit,OnDestroy{
     }
 
     async getData() {
-      this.sub = this.dataService.getRecipes().subscribe((res) => {
-      this.recipes = res;
-      console.log(this.recipes);
+      this.dataService.getRecipesDirect((recipes) => {
+        this.recipes = recipes;
+        console.log('Ažurirani recepti:', this.recipes);
       });
+    
+      /* Ovaj radi provereno
+      this.dataService.getRecipesDirect()
+      .then((recipes) => {
+        this.recipes = recipes;
+        console.log('Dohvaćeni recepti:', this.recipes);
+      })
+      .catch((error) => {
+        console.error('Greška pri dohvatanju recepata:', error);
+      });
+  */
     }
     async deleteRecipe(recipe: any) {
       await this.dataService.deleteRecipe(recipe);
     }
   
+
+    ngOnChanges(changes: SimpleChanges): void {
+      this.getData();
+    }
 }
 
 

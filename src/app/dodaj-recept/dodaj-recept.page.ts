@@ -10,7 +10,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class DodajReceptPage implements OnInit {
   recipeId:number=generateRandomNumber();
-  recipeImg?:String;
+  recipeImg?:String="";
   recipeNaziv?:String;
   recipeOpis?:String;
   recipeTezina?:String;
