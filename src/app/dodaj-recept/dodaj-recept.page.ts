@@ -26,7 +26,7 @@ export class DodajReceptPage implements OnInit {
   async addRecipe() {
     await this.dataservice.addRecipe(
       {
-        id:this.recipeId,
+        id:this.recipeId.toString(),
         naziv:this.recipeNaziv,
         opis:this.recipeOpis,
         img:this.recipeImg,

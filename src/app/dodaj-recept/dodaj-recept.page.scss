@@ -1,0 +1,18 @@
+ion-content {
+  --background: none; /* Removes default Ionic background */
+  background-image: url('./../../assets/photos/poadina.jpg'); 
+  background-repeat: repeat-y; /* Makes the background scroll vertically */
+  background-size: cover; /* Ensures responsiveness */
+  background-attachment: fixed; /* Keeps the background fixed while scrolling */
+}
+
+ion-toolbar {
+  --background: linear-gradient(45deg, #ffeb3b, #8d6e63); /* Yellow to brown gradient */
+  --color: #fff; /* White text for contrast */
+}
+
+ion-title {
+  margin: 0 auto; /* Ensures the title is centered */
+  text-align: center; /* Centers text in the title */
+  font-weight: bolder; /* Bold text */
+}

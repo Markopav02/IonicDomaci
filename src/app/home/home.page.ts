@@ -5,14 +5,21 @@ import { AzurirajReceptPage } from '../azuriraj-recept/azuriraj-recept.page';
 //za rad sa firebase bazom podataka
 import { DataService } from '../service/data.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 type recipe={
-  id:number,
+  id:string,
   img?:String,
   naziv?:String,
   opis?:String,
   tezina?:String,
   omiljen:boolean,
+}
+type User ={
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
 }
 @Component({
   selector: 'app-home',
@@ -20,10 +27,11 @@ type recipe={
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit,OnDestroy,OnChanges{
+  
   today: number = Date.now();
   recipes: any;
   sub: Subscription = new Subscription;
-  constructor(public modalCtrl: ModalController,private dataService: DataService) {}
+  constructor(public modalCtrl: ModalController,private dataService: DataService, private Router : Router) {}
 
   ngOnInit(): void {
     this.getData();
@@ -48,6 +56,7 @@ export class HomePage implements OnInit,OnDestroy,OnChanges{
     async getData() {
       this.dataService.getRecipesDirect((recipes) => {
         this.recipes = recipes;
+        this.recipes = this.sortRecipes(recipes);
         console.log('Ažurirani recepti:', this.recipes);
       });
     
@@ -63,13 +72,38 @@ export class HomePage implements OnInit,OnDestroy,OnChanges{
   */
     }
     async deleteRecipe(recipe: any) {
-      await this.dataService.deleteRecipe(recipe);
+      await this.dataService.deleteRecipe(recipe, (recipes) => {
+        this.recipes = recipes;
+        
+        console.log('Ažurirani recepti nakon brisanja:', this.recipes);
+      });
+      this.getData();
     }
   
-
+    logout() {
+      // Clear any session or token storage
+      localStorage.clear(); // Example of clearing stored data
+      sessionStorage.clear();
+  
+      // Redirect to the login page
+      this.Router.navigate(['/login']);
+    }
     ngOnChanges(changes: SimpleChanges): void {
       this.getData();
     }
+    sortRecipes(recipes: recipe[]): recipe[] {
+      return recipes.sort((a, b) => {
+        if (a.omiljen && !b.omiljen) {
+          return -1;
+        } else if (!a.omiljen && b.omiljen) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
 }
+
+
 
 

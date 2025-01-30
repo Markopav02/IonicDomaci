@@ -1,0 +1,18 @@
+ion-content {
+    --background: none; /* Removes default Ionic background */
+    background-image:  url('./../../assets/photos/cookinglogin.jpg'); /* Replace with your image path */
+    background-repeat: repeat-y; /* Makes the background scroll vertically */
+    background-size: cover; /* Ensures responsiveness */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+  }
+  ion-button{
+    --background: #ffc107; /* Yellow shade */
+  --background-hover: #e0a800; /* Darker yellow for hover */
+  --background-activated: #d39e00; /* Even darker yellow for active state */
+  --border-radius: 10px; /* Optional: Rounded corners */
+  color: #fff; /* White text for contrast */
+  font-weight: bold; /* Make the text bold */
+  text-transform: uppercase; /* Make the text uppercase */
+  --box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Optional: Add shadow */
+
+  }

@@ -2,55 +2,71 @@
   <ion-toolbar>
     <ion-title>
       <h1>Copetova kuhinja</h1>
-      <p class="date">{{today | date:'fullDate'}}</p>
+      <p class="date">{{ today | date: 'fullDate' }}</p>
     </ion-title>
-    
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">Logout</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Glavni sadržaj -->
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Recepti</ion-title>
-      
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true">
+  <!-- Sub-header for recipes -->
+  <ion-toolbar>
+    <ion-title>Recepti</ion-title>
+  </ion-toolbar>
 
-  <ion-content [fullscreen]="true">
-    <ion-list *ngFor="let recipe of recipes">
-      <ion-card>
-        <ion-card-header>
-          <!-- Naslov recepta -->
-          <ion-card-title>{{recipe.naziv}}</ion-card-title>
-          <ion-item lines="none">
-            <!-- Ikonica za težinu pripreme -->
-            <ion-icon *ngIf="recipe.tezina === 'Lako'" name="happy-outline" color="success"></ion-icon>
-            <ion-icon *ngIf="recipe.tezina === 'Srednje'" name="alert-circle-outline" color="warning"></ion-icon>
-            <ion-icon *ngIf="recipe.tezina === 'Teško'" name="skull-outline" color="danger"></ion-icon>
-            <ion-label>&nbsp;{{recipe.tezina}}</ion-label>
-          </ion-item>
-        </ion-card-header>
-        
-        <ion-card-content>
-          <!-- Slika recepta -->
-          
-          
-          <!-- Opis recepta -->
-          <p>{{recipe.opis}}</p>
-          
-          <!-- Akcije za ažuriranje i brisanje -->
-          <ion-row>
-            <ion-button (click)="goToUpdatePage(recipe)" color="primary">Izmeni</ion-button>
-            <ion-button (click)="deleteRecipe(recipe)" color="danger">Izbrisi</ion-button>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-list>
-  </ion-content>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="goToAddPage()">
-    <ion-icon name="add">Dodaj</ion-icon>
-  </ion-fab-button>
-</ion-fab>
+  <!-- Recipes List -->
+  <ion-list>
+    <ion-card *ngFor="let recipe of recipes">
+      <ion-card-header>
+        <!-- Recipe Title -->
+        <ion-card-title>{{ recipe.naziv }}</ion-card-title>
+        <ion-item lines="none">
+          <!-- Difficulty Icon -->
+          <ion-icon
+            *ngIf="recipe.tezina === 'Lako'"
+            name="happy-outline"
+            color="success"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="recipe.tezina === 'Srednje'"
+            name="alert-circle-outline"
+            color="warning"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="recipe.tezina === 'Teško'"
+            name="skull-outline"
+            color="danger"
+          ></ion-icon>
+          <ion-label>&nbsp;{{ recipe.tezina }}</ion-label>
+        </ion-item>
+        <ion-icon
+        *ngIf="recipe.omiljen"
+        name="star"
+        color="warning"
+        class="favorite-icon"
+      ></ion-icon>
+      </ion-card-header>
+
+      <ion-card-content>
+        <!-- Recipe Description -->
+        <p>{{ recipe.opis }}</p>
+
+        <!-- Actions -->
+        <ion-row>
+          <ion-button (click)="goToUpdatePage(recipe)" color="primary">Izmeni</ion-button>
+          <ion-button (click)="deleteRecipe(recipe)" color="danger">Izbrisi</ion-button>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="goToAddPage()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
 

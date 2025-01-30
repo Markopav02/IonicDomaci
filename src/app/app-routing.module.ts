@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'azuriraj-recept',
     loadChildren: () => import('./azuriraj-recept/azuriraj-recept.module').then( m => m.AzurirajReceptPageModule)
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
 ];
 
 @NgModule({

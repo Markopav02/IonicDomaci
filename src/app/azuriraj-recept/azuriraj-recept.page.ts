@@ -9,9 +9,19 @@ import { DataService, recipe } from '../service/data.service';
 })
 export class AzurirajReceptPage implements OnInit {
   @Input() recipe: any;
-  constructor(public modalCtrl: ModalController, private dataService: DataService) { }
+  constructor(public modalCtrl: ModalController, private dataService: DataService,) { }
 
   ngOnInit() {
+    if (!this.recipe) {
+      this.recipe = {
+        id: '',
+        naziv: '',
+        opis: '',
+        tezina: '',
+        omiljen: false,
+        img: ''
+      };
+    }
     console.log(this.recipe); // You can access data here
   }
 
@@ -20,8 +30,14 @@ export class AzurirajReceptPage implements OnInit {
   }
 
   async updateRecipe() {
-
+    if (!this.recipe.id) {
+      console.error('Recipe ID is required for update');
+      this.dismiss();
+      return;
+    }
     await this.dataService.updateRecipe(this.recipe);
+    console.log('Recept ažuriran');
+    this.dismiss();
   }
 
 
